@@ -8,7 +8,7 @@ date_default_timezone_set("Europe/Bratislava");
 
 $name = $_POST["name"];
 $email = $_POST["email"];
-$password = $_POST["password"];
+$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 $code = $_POST["code"];
 $secret = $_POST["secret"];
 
@@ -21,6 +21,7 @@ if ($result == 1) {
 
     $query = "INSERT INTO `account`(`user_id`, `type`, `password`, `secret`) VALUES (".$conn->lastInsertId().",'2fa','".$password."','".$secret."')";
     $stmt = $conn->query($query);
+    header('Location:../index.php');
 } else {
     echo 'Login failed';
 }

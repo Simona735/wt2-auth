@@ -42,13 +42,6 @@ if ($client->getAccessToken()) {
     $UserProfile = $service->userinfo->get();
     var_dump($client->getAccessToken());
     if(!empty($UserProfile)){
-//        $output = '<h1>Profile Details </h1>';
-//        $output .= '<img src="'.$UserProfile['picture'].'">';
-//        $output .= '<br/>Google ID : ' . gettype($UserProfile['id']);
-//        $output .= '<br/>Name : ' . $UserProfile['given_name'].' '.$UserProfile['family_name'];
-//        $output .= '<br/>Email : ' . $UserProfile['email'];
-//        $output .= '<br/>Locale : ' . $UserProfile['locale'];
-//        $output .= '<br/><br/>Logout from <a href="logout.php">Google</a>';
 
         $stmt = $conn->query("SELECT * FROM user WHERE user.email = '".$UserProfile['email']."';");
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

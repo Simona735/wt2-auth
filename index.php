@@ -20,7 +20,7 @@ if(isset($_POST["sign-email"]) && isset($_POST["sign-password"])){
 
         $secret = $account["secret"];
 
-        if (!strcmp($_POST["sign-password"], $account["password"])){
+        if (password_verify($_POST["sign-password"],$account["password"])){
             echo "is OK";
 
             $_SESSION["user_id"] = $user["id"];
