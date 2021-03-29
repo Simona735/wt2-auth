@@ -39,19 +39,6 @@ $websiteTitle = 'Zadanie03';
 $ga = new PHPGangsta_GoogleAuthenticator();
 $secretNew = $ga->createSecret();
 $qrCodeUrl = $ga->getQRCodeGoogleUrl($websiteTitle, $secretNew);
-
-//echo 'Google Charts URL QR-Code:<br /><img src="'.$qrCodeUrl.'" />';
-
-//$myCode = $ga->getCode($secret);
-
-//third parameter of verifyCode is a multiplicator for 30 seconds clock tolerance
-//$result = $ga->verifyCode($secret, $myCode, 1);
-//if ($result) {
-//    echo 'Verified';
-//} else {
-//    echo 'Not verified';
-//}
-
 ?>
 
 <!DOCTYPE html>

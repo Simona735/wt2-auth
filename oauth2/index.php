@@ -60,20 +60,12 @@ if ($client->getAccessToken()) {
         }else{
             $_SESSION["logged_user"] = $user["id"];
         }
-        //TODO login
         $query = $conn->query("SELECT id from account WHERE account.user_id='".$_SESSION["logged_user"]."';");
         $account = $query->fetch(PDO::FETCH_ASSOC);
 
         $query = $conn->query("INSERT INTO `access`(`account_id`) VALUES (".$account["id"].");");
 
         header('Location:../detail.php');
-
-
-
-
-
-
-
     }else{
         $output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';
     }   

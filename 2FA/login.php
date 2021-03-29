@@ -32,8 +32,7 @@ if(isset($_SESSION["user_id"])){
 
 }else{
     echo "why are you here? -_-";
-    //TODO presmerovat naspat ak som tu illegalne
-    //header('Location:../index.php');
+    header('Location:../index.php');
 }
 ?>
 

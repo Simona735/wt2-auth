@@ -49,7 +49,6 @@ if(isset($_POST['username'])){
             }else{
                 $_SESSION["logged_user"] = $user["id"];
             }
-                //TODO login
             $query = $conn->query("SELECT id from account WHERE account.user_id='".$_SESSION["logged_user"]."';");
             $account = $query->fetch(PDO::FETCH_ASSOC);
 
