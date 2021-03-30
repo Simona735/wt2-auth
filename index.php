@@ -37,6 +37,10 @@ if(isset($_POST["sign-email"]) && isset($_POST["sign-password"])){
                 <?php
             }
         }
+    }else{
+        ?>
+        <script> alert("Prosim zaregistruj sa.");</script>
+        <?php
     }
 }else if(isset($_SESSION["logged_user"])){
     header('Location:detail.php');
