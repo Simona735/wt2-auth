@@ -16,11 +16,19 @@ $ga = new PHPGangsta_GoogleAuthenticator();
 $result = $ga->verifyCode($secret, $code);
 
 if ($result == 1) {
-    $query = "INSERT INTO `user`(`name`, `email`) VALUES ('".$name. "','".$email."')";
-    $stmt = $conn->query($query);
+    $stmt = $conn->query("SELECT * FROM user WHERE user.email = '".$email."';");
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $query = "INSERT INTO `account`(`user_id`, `password`, `secret`) VALUES (".$conn->lastInsertId().",'".$password."','".$secret."')";
-    $stmt = $conn->query($query);
+    if ($user == null){
+        $query = "INSERT INTO `user`(`name`, `email`) VALUES ('".$name. "','".$email."')";
+        $stmt = $conn->query($query);
+
+        $query = "INSERT INTO `account`(`user_id`, `password`, `secret`) VALUES (".$conn->lastInsertId().",'".$password."','".$secret."')";
+        $stmt = $conn->query($query);
+
+    }else{
+        $stmt = $conn->query("UPDATE `account` SET `password`='".$password."', `secret`='".$secret."' WHERE account.user_id=".$user["id"].";");
+    }
     header('Location:../index.php');
 } else {
     echo 'Login failed';

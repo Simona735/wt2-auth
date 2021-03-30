@@ -58,14 +58,12 @@ if ($client->getAccessToken()) {
             $_SESSION["logged_user"] = $last_id;
 
         }else{
-//            $stmt = $conn->query("SELECT `google_id` FROM `account` WHERE account.user_id='".$user["id"]."';");
-//            $googleId = $stmt->fetch(PDO::FETCH_ASSOC);
-//
-//            if ($googleId == null){
-//                //TODO continue
-//                //$stmt = $conn->query("SELECT `google_id` FROM `account` WHERE account.user_id='".$user["id"]."';");
-//            }
+            $stmt = $conn->query("SELECT `google_id` FROM `account` WHERE account.user_id=".$user["id"].";");
+            $googleId = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            if($googleId["google_id"] == null){
+                $stmt = $conn->query("UPDATE `account` SET `google_id`='".$UserProfile['id']."' WHERE account.user_id=".$user["id"].";");
+            }
             $_SESSION["logged_user"] = $user["id"];
         }
         $query = $conn->query("SELECT id from account WHERE account.user_id='".$_SESSION["logged_user"]."';");

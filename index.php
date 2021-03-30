@@ -20,15 +20,22 @@ if(isset($_POST["sign-email"]) && isset($_POST["sign-password"])){
 
         $secret = $account["secret"];
 
-        if (password_verify($_POST["sign-password"],$account["password"])){
-            echo "is OK";
-
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: 2FA/login.php");
-        }else{
+        if($secret == null){
             ?>
-            <script> alert("Nesprávne prihlasovacie údaje");</script>
+            <script> alert("Prosim zaregistruj sa.");</script>
             <?php
+        }
+        else {
+            if (password_verify($_POST["sign-password"],$account["password"])){
+                echo "is OK";
+
+                $_SESSION["user_id"] = $user["id"];
+                header("Location: 2FA/login.php");
+            }else{
+                ?>
+                <script> alert("Nesprávne prihlasovacie údaje");</script>
+                <?php
+            }
         }
     }
 }else if(isset($_SESSION["logged_user"])){
