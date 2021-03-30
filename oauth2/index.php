@@ -52,18 +52,26 @@ if ($client->getAccessToken()) {
 
             $last_id = $conn->lastInsertId();
 
-            $query = "INSERT INTO `account`(`user_id`, `type`, `google_id`) VALUES (".$last_id.",'google','".$UserProfile['id']."');";
+            $query = "INSERT INTO `account`(`user_id`, `google_id`) VALUES (".$last_id.",'".$UserProfile['id']."');";
             $stmt = $conn->query($query);
 
             $_SESSION["logged_user"] = $last_id;
 
         }else{
+//            $stmt = $conn->query("SELECT `google_id` FROM `account` WHERE account.user_id='".$user["id"]."';");
+//            $googleId = $stmt->fetch(PDO::FETCH_ASSOC);
+//
+//            if ($googleId == null){
+//                //TODO continue
+//                //$stmt = $conn->query("SELECT `google_id` FROM `account` WHERE account.user_id='".$user["id"]."';");
+//            }
+
             $_SESSION["logged_user"] = $user["id"];
         }
         $query = $conn->query("SELECT id from account WHERE account.user_id='".$_SESSION["logged_user"]."';");
         $account = $query->fetch(PDO::FETCH_ASSOC);
 
-        $query = $conn->query("INSERT INTO `access`(`account_id`) VALUES (".$account["id"].");");
+        $query = $conn->query("INSERT INTO `access`(`account_id`, `type`) VALUES (".$account["id"].", 'google');");
 
         header('Location:../detail.php');
     }else{

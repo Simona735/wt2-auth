@@ -21,10 +21,12 @@ if(isset($_SESSION["user_id"])){
             echo 'Logged in';
             $_SESSION["logged_user"] = $_SESSION["user_id"];
             unset($_SESSION["user_id"]);
-            $query = $conn->query("INSERT INTO `access`(`account_id`) VALUES (".$account["id"].");");
+            $query = $conn->query("INSERT INTO `access`(`account_id`, `type`) VALUES (".$account["id"].", '2fa');");
             header('Location:../detail.php');
         } else {
-            echo 'Neprihlásený';
+            ?>
+            <script> alert("Nesprávny kód");</script>
+            <?php
         }
     }
 }else if(isset($_SESSION["logged_user"])){  //TODO nechce ma presmerovat ak som prihlasena
@@ -52,7 +54,6 @@ if(isset($_SESSION["user_id"])){
     <div id="logreg-forms">
         <form action="login.php" method="post" class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal text-center">Enter code</h1>
-            <div id="loginstatus">Not logged in</div>
 
             <input type="text" class="form-control" placeholder="code" name="code" id="googlecode" required="" autofocus="" />
 

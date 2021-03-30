@@ -1,4 +1,6 @@
-
+#statisticsTable, #infoTable{
+    display: none;
+}
 /* sign in FORM */
 #logreg-forms{
     width:412px;

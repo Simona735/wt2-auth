@@ -1,8 +1,10 @@
 <?php
 require_once '../config.php';
+error_reporting(0) ;
 $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 date_default_timezone_set("Europe/Bratislava");
+
 
 
 session_start();
@@ -41,7 +43,7 @@ if(isset($_POST['username'])){
 
                 $last_id = $conn->lastInsertId();
 
-                $query = "INSERT INTO `account`(`user_id`, `type`) VALUES (".$last_id.",'ldap')";
+                $query = "INSERT INTO `account`(`user_id`) VALUES (".$last_id.")";
                 $stmt = $conn->query($query);
 
                 $_SESSION["logged_user"] = $last_id;
@@ -52,12 +54,12 @@ if(isset($_POST['username'])){
             $query = $conn->query("SELECT id from account WHERE account.user_id='".$_SESSION["logged_user"]."';");
             $account = $query->fetch(PDO::FETCH_ASSOC);
 
-            $query = $conn->query("INSERT INTO `access`(`account_id`) VALUES (".$account["id"].");");
+            $query = $conn->query("INSERT INTO `access`(`account_id`, `type`) VALUES (".$account["id"].", 'ldap');");
             header('Location:../detail.php');
 
-        } else {
-
-            echo "Login Failed: Please check your username or password";
+        } else {?>
+            <script> alert("Nesprávne prihlasovacie údaje");</script>
+<?php
         }
     }
 }

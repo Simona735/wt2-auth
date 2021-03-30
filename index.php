@@ -26,8 +26,9 @@ if(isset($_POST["sign-email"]) && isset($_POST["sign-password"])){
             $_SESSION["user_id"] = $user["id"];
             header("Location: 2FA/login.php");
         }else{
-            echo "you fucked up";
-            //TODO red warning
+            ?>
+            <script> alert("Nesprávne prihlasovacie údaje");</script>
+            <?php
         }
     }
 }else if(isset($_SESSION["logged_user"])){

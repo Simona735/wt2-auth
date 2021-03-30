@@ -11,12 +11,11 @@ if (isset($_POST["logout"])){
     header("Location: index.php");
 
 }else if(isset($_SESSION["logged_user"])){
-    echo $_SESSION["logged_user"];
 
     $stmt = $conn->query("SELECT id, name, email FROM user WHERE user.id = ".$_SESSION["logged_user"].";");
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->query("SELECT user.email, access.timestamp, account.type FROM user JOIN account ON user.id = account.user_id JOIN access on account.id = access.account_id WHERE user.id = ".$_SESSION["logged_user"].";");
+    $stmt = $conn->query("SELECT user.email, access.timestamp, access.type FROM user JOIN account ON user.id = account.user_id JOIN access on account.id = access.account_id WHERE user.id = ".$_SESSION["logged_user"].";");
 
     $accesses = [];
     while($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -24,7 +23,7 @@ if (isset($_POST["logout"])){
         array_push($accesses, [$row['email'], $row['timestamp'], $row['type']]);
     }
 
-    $stmt2 = $conn->query("SELECT account.type, COUNT(*) as count FROM account JOIN access on account.id = access.account_id GROUP BY account.type;");
+    $stmt2 = $conn->query("SELECT access.type, COUNT(*) as count FROM account JOIN access on account.id = access.account_id GROUP BY access.type;");
     $statistics = [];
     while($row = $stmt2->fetch(PDO::FETCH_ASSOC))
     {
@@ -47,7 +46,7 @@ if (isset($_POST["logout"])){
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <title>Upload files</title>
+    <title>Detail</title>
 </head>
 <body class="bg-light">
 <div class="container">
@@ -55,14 +54,10 @@ if (isset($_POST["logout"])){
         <div class="py-5 text-center">
             <h2>Hello <?php echo $user["name"]?></h2>
             <p>Welcome to this page :)</p>
-<!--            <button type="button" onclick="window.location.href='selectToUpload.php';" class="btn btn-primary my-2">-->
-<!--                <i class="bi bi-file-earmark-plus"></i>-->
-<!--                Nahrať súbor-->
-<!--            </button>-->
             <form action="detail.php" method="post" class="form-logout">
-                <button class="btn btn-warning btn-block" name="logout" type="submit"><i class="fas fa-sign-in-alt"></i> Log out</button>
+                <button class="btn btn-warning btn-block mb-2" name="logout" type="submit"><i class="fas fa-sign-in-alt"></i> Log out</button>
             </form>
-            <button class="btn btn-success btn-block" id="infoButton" ><i class="fas fa-sign-in-alt"></i> Info</button>
+            <button class="btn btn-success btn-block m-2" id="infoButton" ><i class="fas fa-sign-in-alt"></i> Info</button>
             <button class="btn btn-success btn-block" id="statisticsButton" ><i class="fas fa-sign-in-alt"></i> All statistics</button>
 
             <div id="statisticsTable" class="table-responsive">

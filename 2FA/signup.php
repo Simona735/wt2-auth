@@ -19,7 +19,7 @@ if ($result == 1) {
     $query = "INSERT INTO `user`(`name`, `email`) VALUES ('".$name. "','".$email."')";
     $stmt = $conn->query($query);
 
-    $query = "INSERT INTO `account`(`user_id`, `type`, `password`, `secret`) VALUES (".$conn->lastInsertId().",'2fa','".$password."','".$secret."')";
+    $query = "INSERT INTO `account`(`user_id`, `password`, `secret`) VALUES (".$conn->lastInsertId().",'".$password."','".$secret."')";
     $stmt = $conn->query($query);
     header('Location:../index.php');
 } else {
