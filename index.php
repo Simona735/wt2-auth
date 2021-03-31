@@ -8,6 +8,11 @@ date_default_timezone_set("Europe/Bratislava");
 
 session_start();
 
+if(isset($_GET["alert"])){
+    ?>
+    <script> alert("Nesprávny kod, zaregistuj sa este raz");</script>
+    <?php
+}
 if(isset($_POST["sign-email"]) && isset($_POST["sign-password"])){
     $email = $_POST["sign-email"];
 

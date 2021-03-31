@@ -31,5 +31,6 @@ if ($result == 1) {
     }
     header('Location:../index.php');
 } else {
+    header('Location:../index.php?alert=message');
     echo 'Login failed';
 }
